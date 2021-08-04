@@ -1,22 +1,20 @@
 import CardLyon from "./CardLyon";
 import Days from "./Days";
 import Header from "./Header";
-
-import { useState, useEffect } from "react";
-
-import "./index.css";
+import { useState, useEffect } from "react";import "./index.css";
 import "./App.css";
 
 function App() {
-  const [dayz, setDayz]= useState(['']);
-  const [on, setOn] = useState(true);
+   const [on, setOn] = useState(true);
   const [name, setName] = useState("");
   const [temp, setTemp] = useState("");
   const [wind, setWind] = useState("");
   const [deg, setDeg] = useState("");
   const [weather, setWeather] = useState("");
   const [day, setDay] = useState("");
+  const [days, setDays] = useState("");
   const [icon, setIcon] = useState("");
+  const [result, setResult] = useState({});
   const [error, setError] = useState(null);
 
   const setData = (data) => {
@@ -26,15 +24,31 @@ function App() {
     setIcon(data.list[0].weather[0].icon);
     setWind(data.list[0].wind.speed);
     setDeg(data.list[0].wind.deg);
+    setResult(data);
     setDay(data.list[0].dt);
-    setDayz([
-      data.list[7].dt,
-      data.list[15].dt,
-      data.list[23].dt,
-      data.list[31].dt,
-      data.list[39].dt,
-    ])
+    setDays([
+    // data.list[0].dt + 86400,
+    // data.list[0].dt+(86400*2),
+    // data.list[0].dt+(86400*3),
+    // data.list[0].dt+(86400*4),
+     data.list[7].dt ,
+     data.list[15].dt,
+     data.list[23].dt,
+     data.list[31].dt
+  ])
+
 };
+function changeDay(timestamp){
+  result.list.forEach( element => {
+    if (element.dt==timestamp){
+    console.log(element)
+    setTemp(element.main.temp)
+    setWind(element.wind.speed)
+    setIcon(element.weather[0].icon)
+    setDeg(element.wind.deg)
+  }
+});
+}
 
   useEffect(async () => {
     if (on) {
@@ -44,7 +58,7 @@ function App() {
         .then((res) => res.json())
         .then(async (data) => {
           setData(data);
-          // console.log(data);
+       
         });
     }
 
@@ -67,7 +81,7 @@ function App() {
               
     <Days
 
-      day={day}
+      day={day} changeDay={changeDay} nextDays={days}
      
     />
       </div>
