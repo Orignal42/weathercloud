@@ -29,11 +29,11 @@ function Days (props) {
     } 
 
     return (
-        <div class="App">
-            <div class="row">
-                <div class="col s12 m6 push-m3">
-                    <div class="weather card blue-grey darken-1">
-                        <div class="card-action">
+        <div className="App">
+            <div className="row">
+                <div className="col s12 m6 push-m3">
+                    <div className="weather card blue-grey darken-1">
+                        <div className="card-action">
                             <a onClick={handleClick}  href="#">{day}</a>
                             {displayDays()}
                             
