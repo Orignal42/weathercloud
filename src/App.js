@@ -6,6 +6,9 @@ import "./index.css";
 import "./App.css";
 
 function App() {
+  const [code, setCode]= useState("");
+  const [humide, setHumide]= useState("");
+  const [pression, setPression]= useState("");
   const [name, setName] = useState("");
   const [temp, setTemp] = useState("");
   const [wind, setWind] = useState("");
@@ -20,19 +23,24 @@ function App() {
   const setData = (data) => {
     setName(data.city.name);
     setTemp(data.list[0].main.temp);
-    setWeather(data.list[0].weather[0].main);
+    setWeather(data.list[0].weather[0].description);
+    setPression(data.list[0].main.pressure);
+    setHumide(data.list[0].main.humidity);
     setIcon(data.list[0].weather[0].icon);
     setWind(data.list[0].wind.speed);
     setDeg(data.list[0].wind.deg);
     setResult(data);
     setDay(data.list[0].dt);
+    setCode(data.cod);
     setDays([
       data.list[7].dt,
       data.list[15].dt,
       data.list[23].dt,
       data.list[31].dt,
     ]);
+ 
   };
+
 
   function changeDay(timestamp) {
     result.list.forEach((element) => {
@@ -50,8 +58,8 @@ function App() {
 
     setUserInput(event.target.value);
   };
-
-  if (name === "") {
+  console.log(code)
+  if (name === "" ) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(getPosition);
     }
@@ -68,7 +76,7 @@ function App() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (userInput !== "") {
+    if (userInput !== ""&& code===200) {
       fetch(
         `https://api.openweathermap.org/data/2.5/forecast?q=${userInput},FR&APPID=0c09503f2db57be3e137a5e8d8606c6f&lang=fr&units=metric`
       )
@@ -103,6 +111,8 @@ function App() {
         wind={wind}
         deg={deg}
         weather={weather}
+        pression={pression}
+        humide={humide}
         icon={icon}
       />
 

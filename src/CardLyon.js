@@ -22,6 +22,8 @@ function CardLyon(props) {
               </p>
               <span className="temperature">{props.temp ? props.temp : ""}°</span>
               <span className="weather">{props.weather ? props.weather : ""}</span>
+              <span className="weather">{props.humide ? props.humide : ""}%</span>
+              <span className="weather">{props.pression ? props.pression : ""}milibar</span>
               <span className="day">{props.day}</span>
               <div className="wind">
                 Vent {props.wind ? props.wind : ""}km/h ({props.deg}°)
