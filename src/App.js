@@ -1,12 +1,11 @@
 import CardLyon from "./CardLyon";
 import Days from "./Days";
 import Header from "./Header";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./index.css";
 import "./App.css";
 
 function App() {
-  const [on, setOn] = useState(true);
   const [name, setName] = useState("");
   const [temp, setTemp] = useState("");
   const [wind, setWind] = useState("");
@@ -28,10 +27,6 @@ function App() {
     setResult(data);
     setDay(data.list[0].dt);
     setDays([
-      // data.list[0].dt + 86400,
-      // data.list[0].dt+(86400*2),
-      // data.list[0].dt+(86400*3),
-      // data.list[0].dt+(86400*4),
       data.list[7].dt,
       data.list[15].dt,
       data.list[23].dt,
@@ -52,49 +47,55 @@ function App() {
 
   const handleSearch = (event) => {
     event.preventDefault();
-    console.log(userInput);
+
     setUserInput(event.target.value);
   };
 
-  if (name === '') {
-   
+  if (name === "") {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(getPosition);
     }
     function getPosition(position) {
       fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=0c09503f2db57be3e137a5e8d8606c6f`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=0c09503f2db57be3e137a5e8d8606c6f&lang=fr&units=metric`
       )
-      .then((res) => res.json())
-      .then( (data) => {
-        setData(data);
-       
-      });
-    
+        .then((res) => res.json())
+        .then((data) => {
+          setData(data);
+        });
     }
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${userInput},FR&units=metric&APPID=0c09503f2db57be3e137a5e8d8606c6f&lang=fr`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-      
-      });
+    if (userInput !== "") {
+      fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${userInput},FR&APPID=0c09503f2db57be3e137a5e8d8606c6f&lang=fr&units=metric`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setData(data);
+        });
     }
-  
+  };
 
   return (
     <div>
       <Header />
-      <div className="search">
-        <form onSubmit={handleSubmit}>
-          <input type="text" onChange={handleSearch} />
-          <button type="submit">Rechercher</button>
-        </form>
+      <div className="App">
+        <div className="row">
+          <div className="col s12 m6 push-m3">
+            <div className="search card blue-grey darken-1">
+              <div className="card-content white-text">
+                <form onSubmit={handleSubmit}>
+                  Rechercher la ville de votre choix
+                  <input type="text" onChange={handleSearch} />
+                  <button type="submit">Rechercher</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <CardLyon
         name={name}
