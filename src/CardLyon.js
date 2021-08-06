@@ -4,7 +4,7 @@ import "./App.css";
 
 
 function CardLyon(props) {
-// console.log(props);
+
   return (
     <div className="App">
       <div className="row">
@@ -22,8 +22,8 @@ function CardLyon(props) {
               </p>
               <span className="temperature">{props.temp ? props.temp : ""}°</span>
               <span className="weather">{props.weather ? props.weather : ""}</span>
-              <span className="weather">{props.humide ? props.humide : ""}%</span>
-              <span className="weather">{props.pression ? props.pression : ""}milibar</span>
+              <span className="weather">Taux d'humidité {props.humide ? props.humide : ""} %</span>
+              <span className="weather">{props.pression ? props.pression : ""} millibars</span>
               <span className="day">{props.day}</span>
               <div className="wind">
                 Vent {props.wind ? props.wind : ""}km/h ({props.deg}°)
