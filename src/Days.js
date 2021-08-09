@@ -34,7 +34,7 @@ function Days (props) {
                 <div className="col s12 m6 push-m3">
                     <div className="days card blue-grey darken-1 ">
                         <div className="card-action">
-                            <a onClick={handleClick}  href="#">{day}</a>
+                            <a onClick={handleClick} data-time={props.day} href="#">{day}</a>
                             {displayDays()}
                             
                            

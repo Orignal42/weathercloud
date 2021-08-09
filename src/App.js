@@ -86,6 +86,7 @@ function App() {
 
   function changeDay(timestamp) {
     setchoiceDay(timestamp);
+    setHour(timestamp);
 
     result.list.forEach((element) => {
       if (element.dt == timestamp) {
@@ -99,28 +100,30 @@ function App() {
     });
   }
 
-  
+
     const changeday = new Date (choiceDay * 1000);
     const daychoc = new Intl.DateTimeFormat("fr-FR", { day: "numeric" }).format(
       changeday
     );
-    console.log(daychoc);
-  
+
+   
   function changeHour(timestamp) {
-    result.list.forEach((element) => {
-      const hourchoc = new Intl.DateTimeFormat("fr-FR", { day: "numeric" }).format(
-        timestamp
-      );
-      console.log( element.dt)
-      console.log(hourchoc)
-      if (element.dt == daychoc) {
+    const changehour = new Date (timestamp * 1000);
+    const hourchoc = new Intl.DateTimeFormat("fr-FR", { day: "numeric" }).format(
+      changehour
+    );
+    console.log(daychoc)
+    console.log(hourchoc)
+   
+    result.list.forEach((element) => { 
         setTemp(element.main.temp);
         setWind(element.wind.speed);
         setIcon(element.weather[0].icon);
         setDeg(element.wind.deg);
         setPression(element.main.pressure);
         setHumide(element.main.humidity);
-      }
+ 
+
     });
   }
 
@@ -196,7 +199,7 @@ function App() {
       </div>
 
       <div className="hours">
-        <Hours hour={hour} changeHour={changeHour} nextHours={hours} />
+        <Hours hour={hour} changeHour={changeHour} nextHours={hours} changeDay={changeDay} />
       </div>
     </div>
   );
